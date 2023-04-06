@@ -5,10 +5,10 @@ const camera = new THREE.PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight,
   0.1,
-  50000
+  100000
 );
 // 设置相机位置
-camera.position.set(0, 15, 15);
+camera.position.set(1000, 1000, 1000);
 // 更新摄像头
 camera.aspect = window.innerWidth / window.innerHeight;
 //   更新摄像机的投影矩阵

@@ -1,4 +1,5 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 import * as THREE from "three";
 
 export default class City {
@@ -6,9 +7,12 @@ export default class City {
     // 载入模型
     this.scene = scene;
     this.loader = new GLTFLoader();
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath("./draco/");
+    this.loader.setDRACOLoader(dracoLoader);
     this.loader.load("./model/city.glb", (gltf) => {
       console.log(gltf);
-      // this.scene.background =  gltf.scene
+      scene.add(gltf.scene);
     });
   }
 }

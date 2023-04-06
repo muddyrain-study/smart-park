@@ -3,7 +3,6 @@ import { onMounted, ref, watch } from "vue";
 import * as THREE from "three";
 import gsap from "gsap";
 
-import AlarmSprite from "@/model/Mesh/AlarmSprite";
 import scene from "@/model/scene";
 import "@/model/init";
 import camera from "@/model/camera";
@@ -19,8 +18,6 @@ const sceneDiv = ref(null);
 scene.add(camera);
 // 添加辅助坐标轴
 scene.add(axesHelper);
-
-const props = defineProps(["eventList"]);
 
 createMesh();
 
