@@ -3,12 +3,14 @@ import renderer from "./renderer";
 import * as THREE from "three";
 import scene from "./scene";
 import camera from "./camera";
+import { updateMesh } from "@/model/createMesh";
 
 // 设置时钟
 const clock = new THREE.Clock();
 function animate() {
-  let time = clock.getElapsedTime();
   controls.update();
+  let time = clock.getDelta();
+  updateMesh(time);
   renderer.render(scene, camera);
   window.requestAnimationFrame(animate);
 }

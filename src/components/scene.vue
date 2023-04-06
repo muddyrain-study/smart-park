@@ -7,17 +7,14 @@ import scene from "@/model/scene";
 import "@/model/init";
 import camera from "@/model/camera";
 import renderer from "@/model/renderer";
-import axesHelper from "@/model/axesHelper";
 import animate from "@/model/animate";
-import createMesh from "@/model/createMesh";
+import createMesh, { updateMesh } from "@/model/createMesh";
 
 // 场景元素
 const sceneDiv = ref(null);
 
 // 场景添加相机
 scene.add(camera);
-// 添加辅助坐标轴
-scene.add(axesHelper);
 
 createMesh();
 
