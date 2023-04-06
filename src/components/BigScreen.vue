@@ -39,22 +39,37 @@
       <div class="right">
         <div class="cityEvent list">
           <h3>
-            <span>事件列表</span>
+            <span>切换观览模式</span>
           </h3>
           <ul>
-            <li
-              v-for="(item, i) in props.eventList"
-              :class="{ active: currentActive == i }"
-              @click="toggleEvent(i)"
-            >
+            <li @click="toggleControls('Orbit')">
               <h1>
                 <div>
-                  <img class="icon" :src="imgs[item.name]" />
-                  <span>{{ item.name }}</span>
+                  <img class="icon" src="../assets/bg/dianli.svg" />
+                  <span>轨道观览模式</span>
                 </div>
-                <span class="time">{{ item.time }}</span>
               </h1>
-              <p>{{ item.type }}</p>
+              <p>可以使得相机围绕目标进行轨道运动。</p>
+            </li>
+            <li @click="toggleControls('Fly')">
+              <h1>
+                <div>
+                  <img class="icon" src="../assets/bg/dianli.svg" />
+                  <span>飞行观览模式</span>
+                </div>
+              </h1>
+              <p>
+                启用了一种类似于数字内容创建工具（例如Blender）中飞行模式的导航方式
+              </p>
+            </li>
+            <li @click="toggleControls('FirstPerson')">
+              <h1>
+                <div>
+                  <img class="icon" src="../assets/bg/dianli.svg" />
+                  <span>第一人称观览模式</span>
+                </div>
+              </h1>
+              <p>第一人称控制器</p>
             </li>
           </ul>
         </div>
@@ -94,6 +109,10 @@ const toggleAction = (i) => {
 
 const toggleCamera = (name) => {
   eventHub.emit("toggleCamera", name);
+};
+
+const toggleControls = (name) => {
+  eventHub.emit("toggleControls", name);
 };
 </script>
 
@@ -235,6 +254,7 @@ h1 {
   justify-content: space-between;
   font-size: 0.2rem;
   pointer-events: auto;
+  cursor: pointer;
 }
 h3 {
   color: #fff;
@@ -248,7 +268,7 @@ h1 > div {
   align-items: center;
 }
 h1 span.time {
-  font-size: 0.2rem;
+  font-size: 0.1rem;
   font-weight: normal;
 }
 
