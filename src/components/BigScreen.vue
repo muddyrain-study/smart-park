@@ -3,13 +3,17 @@
     <div class="header">智慧城市管理系统平台</div>
     <div class="main">
       <div class="left">
-        <div class="cityEvent" v-for="(item, key) in dataInfo" :key="key">
+        <div class="cityEvent">
           <h3>
-            <span>{{ item.name }}</span>
+            <span>热气球控制</span>
           </h3>
-          <h1>
+          <h1 @click="toggleAction(0)">
             <img src="../assets/bg/bar.svg" class="icon" />
-            <span>{{ toFixInt(item.number) }}（{{ item.unit }}）</span>
+            <span>设置热气球以横穿园区的动画显示</span>
+          </h1>
+          <h1 @click="toggleAction(1)">
+            <img src="../assets/bg/bar.svg" class="icon" />
+            <span>设置热气球以环绕园区进行运动</span>
           </h1>
           <div class="footerBoder"></div>
         </div>
@@ -64,6 +68,11 @@ eventHub.on("spriteClick", (data) => {
 const toggleEvent = (i) => {
   currentActive.value = i;
   eventHub.emit("eventToggle", i);
+};
+
+const toggleAction = (i) => {
+  console.log(i);
+  eventHub.emit("actionClick", i);
 };
 </script>
 
@@ -203,7 +212,8 @@ h1 {
   align-items: center;
   padding: 0 0.3rem 0.3rem;
   justify-content: space-between;
-  font-size: 0.3rem;
+  font-size: 0.2rem;
+  pointer-events: auto;
 }
 h3 {
   color: #fff;
