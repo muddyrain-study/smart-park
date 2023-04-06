@@ -1,6 +1,6 @@
 <template>
   <div id="bigScreen">
-    <div class="header">智慧城市管理系统平台</div>
+    <div class="header">智慧园区管理系统平台</div>
     <div class="main">
       <div class="left">
         <div class="cityEvent">
@@ -14,6 +14,24 @@
           <h1 @click="toggleAction(1)">
             <img src="../assets/bg/bar.svg" class="icon" />
             <span>设置热气球以环绕园区进行运动</span>
+          </h1>
+          <div class="footerBoder"></div>
+        </div>
+        <div class="cityEvent">
+          <h3>
+            <span>相机控制</span>
+          </h3>
+          <h1 @click="toggleCamera('default')">
+            <img src="../assets/bg/bar.svg" class="icon" />
+            <span>默认相机视角</span>
+          </h1>
+          <h1 @click="toggleCamera('carcamera_Orientation')">
+            <img src="../assets/bg/bar.svg" class="icon" />
+            <span>设置相机追随汽车导览园区</span>
+          </h1>
+          <h1 @click="toggleCamera('rightcamera_Orientation')">
+            <img src="../assets/bg/bar.svg" class="icon" />
+            <span>设置相机查看汽车司机视角</span>
           </h1>
           <div class="footerBoder"></div>
         </div>
@@ -71,8 +89,11 @@ const toggleEvent = (i) => {
 };
 
 const toggleAction = (i) => {
-  console.log(i);
   eventHub.emit("actionClick", i);
+};
+
+const toggleCamera = (name) => {
+  eventHub.emit("toggleCamera", name);
 };
 </script>
 

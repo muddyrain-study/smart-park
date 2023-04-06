@@ -3,6 +3,7 @@ import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 import * as THREE from "three";
 import eventHub from "@/utils/eventHub";
 import { gsap } from "gsap";
+import cameraModule from "@/model/camera";
 
 export default class City {
   constructor(scene) {
@@ -53,6 +54,10 @@ export default class City {
           this.curveProgress = 0;
           this.carAnimation();
         }
+      });
+      gltf.cameras.forEach((camera) => {
+        // scene.add(camera);
+        cameraModule.add(camera.name, camera);
       });
     });
     eventHub.on("actionClick", (i) => {
