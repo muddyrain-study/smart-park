@@ -4,6 +4,7 @@ import * as THREE from "three";
 import eventHub from "@/utils/eventHub";
 import { gsap } from "gsap";
 import cameraModule from "@/model/camera";
+import controlsModule from "../controls";
 
 export default class City {
   constructor(scene) {
@@ -71,7 +72,6 @@ export default class City {
               }
             });
             gltf.scene.scale.set(15, 15, 15);
-            console.log("child.position", child.position);
             const childPostion = child.position.clone();
             gltf.scene.position.set(
               childPostion.x + 40,
@@ -84,6 +84,20 @@ export default class City {
             const action = this.personMixer.clipAction(gltf.animations[0]);
             action.play();
             action.timeScale = 3;
+            eventHub.on("togglePerson", () => {
+              gsap.to(controlsModule.controls.target, {
+                ...gltf.scene.position.clone(),
+                duration: 1,
+                onComplete() {
+                  gsap.to(cameraModule.activeCamera.position, {
+                    x: gltf.scene.position.clone().x * 0.95,
+                    y: gltf.scene.position.clone().y * 1.25,
+                    z: gltf.scene.position.clone().z,
+                    duration: 2,
+                  });
+                },
+              });
+            });
           });
         }
       });
@@ -92,6 +106,7 @@ export default class City {
         cameraModule.add(camera.name, camera);
       });
     });
+
     eventHub.on("actionClick", (i) => {
       this.clip = this.gltf.animations[i];
       this.action.stop();

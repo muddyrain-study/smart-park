@@ -71,6 +71,15 @@
               </h1>
               <p>第一人称控制器</p>
             </li>
+            <li @click="togglePerson()">
+              <h1>
+                <div>
+                  <img class="icon" src="../assets/bg/dianli.svg" />
+                  <span>切换小人视角</span>
+                </div>
+              </h1>
+              <p>切换小人视角</p>
+            </li>
           </ul>
         </div>
       </div>
@@ -113,6 +122,9 @@ const toggleCamera = (name) => {
 
 const toggleControls = (name) => {
   eventHub.emit("toggleControls", name);
+};
+const togglePerson = () => {
+  eventHub.emit("togglePerson");
 };
 </script>
 
