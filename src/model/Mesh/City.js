@@ -18,7 +18,7 @@ export default class City {
 
       // 对场景子元素进行遍历
       this.gltf = gltf;
-      console.log(gltf);
+      console.log("gltf", gltf);
       gltf.scene.traverse((child) => {
         if (child.name === "热气球") {
           // 根据无图创建一个 动画混合器 混合器播放的动画所属的对象
@@ -54,6 +54,38 @@ export default class City {
           this.curveProgress = 0;
           this.carAnimation();
         }
+        if (child.name === "Stark_Tower") {
+          this.loader.load("./model/jianshen-min.glb", (gltf) => {
+            gltf.scene.traverse(function (child) {
+              if (child.name == "Floor") {
+                child.material = new THREE.MeshStandardMaterial({
+                  color: 0xffffff,
+                });
+              }
+              if (child.isMesh) {
+                child.material.depthWrite = true;
+                child.material.normalScale = new THREE.Vector2(1, 1);
+                child.material.side = THREE.FrontSide;
+                child.material.transparent = false;
+                child.material.vertexColors = false;
+              }
+            });
+            gltf.scene.scale.set(15, 15, 15);
+            console.log("child.position", child.position);
+            const childPostion = child.position.clone();
+            gltf.scene.position.set(
+              childPostion.x + 40,
+              childPostion.y + 260,
+              childPostion.z + 5
+            );
+            gltf.scene.rotation.y = Math.PI / 2;
+            scene.add(gltf.scene);
+            this.personMixer = new THREE.AnimationMixer(gltf.scene);
+            const action = this.personMixer.clipAction(gltf.animations[0]);
+            action.play();
+            action.timeScale = 3;
+          });
+        }
       });
       gltf.cameras.forEach((camera) => {
         // scene.add(camera);
@@ -67,10 +99,16 @@ export default class City {
       this.action.setDuration(5);
       this.action.play();
     });
+    eventHub.on("focusDance", () => {
+      // this.womanPosition = this.woman = p
+    });
   }
   update(time) {
     if (time && this.mixer) {
       this.mixer.update(time);
+    }
+    if (time && this.personMixer) {
+      this.personMixer.update(time);
     }
   }
   carAnimation() {
